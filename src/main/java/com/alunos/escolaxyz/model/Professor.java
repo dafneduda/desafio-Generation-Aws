@@ -1,9 +1,13 @@
 package com.alunos.escolaxyz.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import java.util.List;
+
 
 @Entity
 @Table(name = "tb_professores")
@@ -19,6 +23,10 @@ public class Professor {
 
     @NotNull(message = "O número da sala é obrigatório")
     private int numeroDaSala;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "professor", cascade = CascadeType.REMOVE)
+    @JsonIgnoreProperties("professor")
+    private List<Aluno> aluno;
 
     public Long getId() {
         return id;
